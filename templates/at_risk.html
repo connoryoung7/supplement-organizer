@@ -32,9 +32,9 @@
         <span class="row-main">
           <span class="row-title">{{ r.title }}</span>
           <span class="row-sub">{{ r.subtitle }} · {{ r.bottle }}, expires {{ r.expires }}</span>
+          <span class="pill warn">{{ r.risk }}</span>
           <span class="row-note">{{ r.projection }}</span>
         </span>
-        <span class="pill warn">{{ r.risk }}</span>
       </a>
     </li>
     {% endfor %}

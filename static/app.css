@@ -108,6 +108,13 @@ main {
 }
 
 @media (max-width: 640px) {
+  /* A backdrop-filter makes the header the containing block for fixed-position
+     children, which would pin the tab bar to the header instead of the screen. */
+  .masthead {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: var(--bg);
+  }
   .tabs {
     position: fixed;
     left: 0;
@@ -208,6 +215,7 @@ a.row:hover { background: var(--surface-2); }
 .pill.danger { background: var(--danger-soft); color: var(--danger); }
 .pill.ok { background: var(--ok-soft); color: var(--ok); }
 .row .pill.warn { white-space: normal; text-align: right; max-width: 45%; }
+.row-main .pill.warn { align-self: flex-start; margin: 4px 0 2px; max-width: none; text-align: left; white-space: nowrap; }
 
 /* ---- Bottles ---- */
 .bottles { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
@@ -225,10 +233,10 @@ details > summary { cursor: pointer; color: var(--accent); font-weight: 600; }
 details[open] > summary { margin-bottom: 12px; }
 
 /* ---- Stats ---- */
-.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 8px; }
+.stats { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin: 0 0 8px; }
 .stats dt { color: var(--muted); font-size: 13px; }
 .stats dd { margin: 0; font-size: 17px; font-weight: 600; }
-.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .tile { padding: 14px; display: flex; flex-direction: column; gap: 2px; }
 .tile-num { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
 .tile-label { color: var(--muted); font-size: 13px; line-height: 1.3; }
@@ -280,6 +288,7 @@ details[open] > summary { margin-bottom: 12px; }
 .take { white-space: nowrap; }
 .button-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .button-row form { margin: 0; }
+.button-row + p { margin-top: 12px; }
 .danger-zone { margin-top: 24px; }
 .danger-zone p { margin-top: 8px; }
 
@@ -299,7 +308,7 @@ input[type="date"] { min-width: 0; }
 .check { flex-direction: row; align-items: center; gap: 10px; color: var(--text); }
 .check input { width: 20px; min-height: 20px; margin: 0; accent-color: var(--accent); }
 .stack { display: grid; gap: 14px; }
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
 .inline-form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; }
 .inline-form label { flex: 1 1 140px; }
 fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
