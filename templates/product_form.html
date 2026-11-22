@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{% if id.is_some() %}Edit product{% else %}New product{% endif %} · Supplements{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>{% if id.is_some() %}Edit product{% else %}New product{% endif %}</h1>
+</div>
+
+<form method="post" action="{% if let Some(id) = id %}/products/{{ id }}{% else %}/products{% endif %}" class="card pad stack">
+  <label>Brand <input type="text" name="brand" value="{{ brand }}" required></label>
+  <label>Name <input type="text" name="name" value="{{ name }}" placeholder="e.g. Vitamin D3" required></label>
+  <label>Strength <input type="text" name="strength" value="{{ strength }}" placeholder="optional, e.g. 5000 IU"></label>
+  <label>Unit
+    <select name="unit">
+      {% for u in units %}<option value="{{ u.value }}"{% if u.selected %} selected{% endif %}>{{ u.label }}</option>{% endfor %}
+    </select>
+  </label>
+  <fieldset class="schedule">
+    <legend>Schedule</legend>
+    <div class="grid-2">
+      <label>Units per dose <input type="number" name="dose_units" min="1" value="{{ dose_units }}" inputmode="numeric" required></label>
+      <label>Every … days <input type="number" name="dose_every_days" min="1" max="365" value="{{ every_days }}" inputmode="numeric" required></label>
+    </div>
+    <p class="muted small">1 every 1 day is daily; 1 every 2 days is every other day.</p>
+  </fieldset>
+  <div class="button-row">
+    <button class="button primary">Save</button>
+    <a class="button quiet" href="{% if let Some(id) = id %}/products/{{ id }}{% else %}/products{% endif %}">Cancel</a>
+  </div>
+</form>
+
+{% if let Some(id) = id %}
+<form method="post" action="/products/{{ id }}/delete" class="danger-zone" hx-confirm="Delete this product with all its bottles and doses? This can't be undone.">
+  <button class="button danger">Delete product</button>
+</form>
+{% endif %}
+{% endblock %}

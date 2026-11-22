@@ -1,0 +1,20 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE products SET brand = $2, name = $3, strength = $4, unit = $5, dose_units = $6, dose_every_days = $7\n         WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "Int4",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "a9bbdd96dba65faa573f7a16d822bc0540eec5be3d32a53ccffa767856e0ff86"
+}

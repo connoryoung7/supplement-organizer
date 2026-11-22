@@ -1,0 +1,40 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT product_id, min(taken_on) AS \"first!\", max(taken_on) AS \"last!\"\n           FROM doses GROUP BY product_id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "product_id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "doses",
+            "name": "product_id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "first!",
+        "type_info": "Date",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 2,
+        "name": "last!",
+        "type_info": "Date",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      null,
+      null
+    ]
+  },
+  "hash": "91984ae21a8610d2fb8c8d573441a3edb22f07e528b89d3d48b85b96cac27220"
+}

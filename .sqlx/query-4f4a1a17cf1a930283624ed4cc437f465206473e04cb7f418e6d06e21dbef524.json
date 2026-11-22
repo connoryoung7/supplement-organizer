@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO product_ingredients (product_id, ingredient_id, amount) VALUES ($1, $2, $3)\n         ON CONFLICT (product_id, ingredient_id) DO UPDATE SET amount = EXCLUDED.amount",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Int8",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "4f4a1a17cf1a930283624ed4cc437f465206473e04cb7f418e6d06e21dbef524"
+}

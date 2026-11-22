@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Edit dose · Supplements{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">{{ product_title }}</p>
+    <h1>Edit dose</h1>
+  </div>
+</div>
+
+<form method="post" action="/doses/{{ id }}" class="card pad stack">
+  <div class="grid-2">
+    <label>{{ unit_plural }} <input type="number" name="units" min="1" value="{{ units }}" inputmode="numeric" required></label>
+    <label>Taken on <input type="date" name="taken_on" value="{{ taken_on }}" max="{{ today_iso }}" required></label>
+  </div>
+  <div class="button-row">
+    <button class="button primary">Save</button>
+    <a class="button quiet" href="/products/{{ product_id }}">Cancel</a>
+  </div>
+</form>
+
+<form method="post" action="/doses/{{ id }}/delete" class="danger-zone">
+  <input type="hidden" name="back" value="/products/{{ product_id }}">
+  <button class="button danger">Delete dose</button>
+</form>
+{% endblock %}

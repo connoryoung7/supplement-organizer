@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO product_pauses (product_id, paused_on) VALUES ($1, $2)\n         ON CONFLICT (product_id) WHERE resumed_on IS NULL DO NOTHING",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Date"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "57c1ac7d3d018113bc1841c79511742fd295b650c5d0eb64f732234c6f63b05f"
+}

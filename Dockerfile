@@ -3,13 +3,19 @@
 # ---- Build stage ----
 FROM rust:1-slim-trixie AS builder
 WORKDIR /app
+# sqlx's query macros check SQL against the committed .sqlx/ metadata, not a live database.
+ENV SQLX_OFFLINE=true
 
 # Build dependencies first so they're cached across source-only changes.
-COPY Cargo.toml Cargo.lock* ./
+COPY Cargo.toml Cargo.lock* build.rs ./
 RUN mkdir src && echo "fn main() {}" > src/main.rs \
     && cargo build --release \
     && rm -rf src
 
+COPY .sqlx ./.sqlx
+COPY migrations ./migrations
+COPY templates ./templates
+COPY static ./static
 COPY src ./src
 # Touch main.rs so cargo rebuilds the real binary instead of the stub.
 RUN touch src/main.rs && cargo build --release

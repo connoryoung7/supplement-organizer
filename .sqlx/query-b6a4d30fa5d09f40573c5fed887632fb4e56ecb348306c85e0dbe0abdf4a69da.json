@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE product_pauses SET resumed_on = greatest($2, paused_on)\n         WHERE product_id = $1 AND resumed_on IS NULL",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Date"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "b6a4d30fa5d09f40573c5fed887632fb4e56ecb348306c85e0dbe0abdf4a69da"
+}

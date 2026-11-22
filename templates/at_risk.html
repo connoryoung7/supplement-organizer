@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}At risk · Supplements{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>At risk</h1>
+</div>
+
+<div class="tiles">
+  <div class="card tile">
+    <span class="tile-num">{{ card.expired_last_12_months }}</span>
+    <span class="tile-label">expired in the last 12 months</span>
+  </div>
+  <div class="card tile">
+    <span class="tile-num">{{ card.expired_all_time }}</span>
+    <span class="tile-label">expired, all time</span>
+  </div>
+  <div class="card tile">
+    <span class="tile-num">{{ card.finished_on_time }}</span>
+    <span class="tile-label">finished before expiry</span>
+  </div>
+</div>
+
+<section>
+  <h2 class="section-title">Will expire before they're finished</h2>
+  {% if rows.is_empty() %}
+  <p class="card pad">Every bottle is on course to be finished before it expires.</p>
+  {% else %}
+  <ul class="list card">
+    {% for r in rows %}
+    <li>
+      <a class="row" href="/products/{{ r.product_id }}">
+        <span class="row-main">
+          <span class="row-title">{{ r.title }}</span>
+          <span class="row-sub">{{ r.subtitle }} · {{ r.bottle }}, expires {{ r.expires }}</span>
+          <span class="row-note">{{ r.projection }}</span>
+        </span>
+        <span class="pill warn">{{ r.risk }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+{% endblock %}

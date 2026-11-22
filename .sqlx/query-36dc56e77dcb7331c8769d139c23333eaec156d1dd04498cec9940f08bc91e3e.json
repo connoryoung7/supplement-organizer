@@ -1,0 +1,110 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, brand, name, strength, unit, dose_units, dose_every_days, status\n         FROM products ORDER BY lower(name), lower(brand), lower(strength)",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "products",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "brand",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "products",
+            "name": "brand"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "name",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "products",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "strength",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "products",
+            "name": "strength"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "unit",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "products",
+            "name": "unit"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "dose_units",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "products",
+            "name": "dose_units"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "dose_every_days",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "products",
+            "name": "dose_every_days"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "status",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "products",
+            "name": "status"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "36dc56e77dcb7331c8769d139c23333eaec156d1dd04498cec9940f08bc91e3e"
+}

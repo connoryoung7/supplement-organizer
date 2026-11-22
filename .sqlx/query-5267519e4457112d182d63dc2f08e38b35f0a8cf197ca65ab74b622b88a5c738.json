@@ -1,0 +1,76 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, product_id, taken_on, units, created_at FROM doses\n         WHERE taken_on >= $1 ORDER BY taken_on, created_at",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "doses",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "product_id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "doses",
+            "name": "product_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "taken_on",
+        "type_info": "Date",
+        "origin": {
+          "Table": {
+            "table": "doses",
+            "name": "taken_on"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "units",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "doses",
+            "name": "units"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "created_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "doses",
+            "name": "created_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Date"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "5267519e4457112d182d63dc2f08e38b35f0a8cf197ca65ab74b622b88a5c738"
+}

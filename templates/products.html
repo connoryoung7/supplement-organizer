@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Products · Supplements{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Products</h1>
+  <a class="button primary" href="/products/new">Add product</a>
+</div>
+
+{% if let Some(name) = filter %}
+<p class="filter">Containing <strong>{{ name }}</strong> · <a href="/products">Show all</a></p>
+{% endif %}
+
+{% if sections.is_empty() %}
+<p class="card pad muted">No products yet.</p>
+{% endif %}
+
+{% for section in sections %}
+<section>
+  <h2 class="section-title">{{ section.title }}</h2>
+  <ul class="list card">
+    {% for item in section.items %}
+    <li>
+      <a class="row" href="/products/{{ item.id }}">
+        <span class="row-main">
+          <span class="row-title">{{ item.title }}</span>
+          <span class="row-sub">{{ item.subtitle }}</span>
+          <span class="row-note">{{ item.stock }} · {{ item.rate }}</span>
+        </span>
+        {% if item.at_risk > 0 %}<span class="pill warn">{{ item.at_risk }} at risk</span>{% endif %}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}
+{% endblock %}

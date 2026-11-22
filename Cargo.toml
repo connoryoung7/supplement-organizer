@@ -4,9 +4,16 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+anyhow = "1"
+askama = "0.16"
 axum = "0.8"
+chrono = { version = "0.4", default-features = false, features = ["std", "clock", "serde"] }
+chrono-tz = "0.10"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+serde_urlencoded = "0.7"
+sqlx = { version = "0.9", default-features = false, features = ["runtime-tokio", "tls-rustls-ring-webpki", "postgres", "chrono", "macros", "migrate"] }
+thiserror = "2"
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "signal"] }
 tower-http = { version = "0.6", features = ["trace"] }
 tracing = "0.1"

@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} · Supplements{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">{{ subtitle }}</p>
+    <h1>{{ title }}</h1>
+    <p class="muted">{{ schedule }}{% if status != "active" %} · <span class="pill">{{ status }}</span>{% endif %}</p>
+  </div>
+  <a class="button" href="/products/{{ id }}/edit">Edit</a>
+</div>
+
+<section class="card pad">
+  <dl class="stats">
+    <div><dt>Planned</dt><dd>{{ rate_planned }}</dd></div>
+    <div><dt>Actual, last 30 days</dt><dd>{% if let Some(rate) = rate_actual %}{{ rate }}{% else %}—{% endif %}</dd></div>
+  </dl>
+  <p class="muted small">{{ rate_used }}</p>
+</section>
+
+<section>
+  <h2 class="section-title">Bottles</h2>
+  {% if queue.is_empty() %}
+  <p class="card pad muted">No bottles on hand.</p>
+  {% else %}
+  <ol class="bottles">
+    {% for b in queue %}
+    <li class="card bottle{% if b.is_started %} open{% endif %}">
+      <div class="bottle-head">
+        <span class="pill{% if b.is_started %} accent{% endif %}">{{ b.label }}</span>
+        <span class="bottle-count">{{ b.count }}</span>
+      </div>
+      <p>Expires <strong>{{ b.expires }}</strong>{% if b.expired %} <span class="pill danger">expired</span>{% endif %}</p>
+      <p class="muted small">{% if let Some(opened) = b.opened %}Opened {{ opened }} · {% endif %}{{ b.projection }}</p>
+      {% if let Some(risk) = b.risk %}<p class="risk">{{ risk }}</p>{% endif %}
+      <details class="bottle-actions">
+        <summary>Change</summary>
+        {% if b.is_new %}
+        <form method="post" action="/bottles/{{ b.id }}/start" class="inline-form">
+          <input type="hidden" name="back" value="/products/{{ id }}">
+          <label>Opened on <input type="date" name="on" value="{{ today_iso }}" max="{{ today_iso }}"></label>
+          <button class="button">Start this one instead</button>
+        </form>
+        {% endif %}
+        {% if b.is_started %}
+        <form method="post" action="/bottles/{{ b.id }}/count" class="inline-form">
+          <input type="hidden" name="back" value="/products/{{ id }}">
+          <label>Actually holds <input type="number" name="count" min="0" value="{{ b.remaining }}" inputmode="numeric" required></label>
+          <label>Counted on <input type="date" name="on" value="{{ today_iso }}" max="{{ today_iso }}"></label>
+          <button class="button">Correct count</button>
+        </form>
+        <form method="post" action="/bottles/{{ b.id }}/count" class="inline-form">
+          <input type="hidden" name="back" value="/products/{{ id }}">
+          <input type="hidden" name="count" value="0">
+          <label>Ran out on <input type="date" name="on" value="{{ today_iso }}" max="{{ today_iso }}"></label>
+          <button class="button">Mark finished</button>
+        </form>
+        {% endif %}
+        <a class="button quiet" href="/bottles/{{ b.id }}/edit">Edit or delete bottle</a>
+      </details>
+    </li>
+    {% endfor %}
+  </ol>
+  {% endif %}
+
+  <details class="card pad add-bottles"{% if queue.is_empty() %} open{% endif %}>
+    <summary>Add bottles</summary>
+    <form method="post" action="/products/{{ id }}/bottles" class="stack">
+      <div class="grid-2">
+        <label>Count per bottle ({{ unit_plural }}) <input type="number" name="count" min="1" inputmode="numeric" required></label>
+        <label>How many bottles <input type="number" name="quantity" min="1" max="50" value="1" inputmode="numeric"></label>
+      </div>
+      <label>Expiry date <input type="text" name="expires" placeholder="03/2027 or 2027-03-15" autocomplete="off" required></label>
+      <label class="check"><input type="checkbox" name="already_open"> Already open — the count is what's left in it</label>
+      <button class="button primary">Add</button>
+    </form>
+  </details>
+</section>
+
+<section class="card pad">
+  <h2>Log a dose</h2>
+  <form method="post" action="/products/{{ id }}/doses" class="inline-form">
+    <label>{{ unit_plural }} <input type="number" name="units" min="1" value="{{ dose_units }}" inputmode="numeric" required></label>
+    <label>Taken on <input type="date" name="taken_on" value="{{ today_iso }}" max="{{ today_iso }}"></label>
+    <button class="button primary">Log</button>
+  </form>
+</section>
+
+<section>
+  <h2 class="section-title">History</h2>
+  {% if history.is_empty() %}
+  <p class="card pad muted">No doses yet.</p>
+  {% else %}
+  <ul class="list card history">
+    {% for h in history %}
+    <li class="row">
+      <span class="row-main">
+        <span class="row-title">{{ h.text }}</span>
+        <span class="row-sub">{{ h.date }}</span>
+      </span>
+      {% if let Some(url) = h.edit_url %}<a class="button quiet small" href="{{ url }}">Edit</a>{% endif %}
+      <form method="post" action="{{ h.delete_url }}">
+        <input type="hidden" name="back" value="/products/{{ id }}">
+        <button class="button quiet small">Delete</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+
+{% if !finished.is_empty() %}
+<details class="card pad">
+  <summary>Finished bottles ({{ finished.len() }})</summary>
+  <ul class="list finished">
+    {% for f in finished %}
+    <li>
+      <div class="row-flat">
+        <span>Expiry {{ f.expires }} · finished {{ f.finished }}</span>
+        {% if f.expired %}<span class="pill danger">finished late</span>{% else %}<span class="pill ok">on time</span>{% endif %}
+      </div>
+      <form method="post" action="/bottles/{{ f.id }}/count" class="inline-form">
+        <input type="hidden" name="back" value="/products/{{ id }}">
+        <label>Not empty? It holds <input type="number" name="count" min="1" inputmode="numeric" required></label>
+        <button class="button">Re-open</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+</details>
+{% endif %}
+
+<section class="card pad">
+  <h2>Ingredients</h2>
+  {% if !ingredients.is_empty() %}
+  <ul class="chips">
+    {% for i in ingredients %}
+    <li class="chip">
+      <a href="/products?ingredient={{ i.id }}">{{ i.name }}</a>
+      {% if let Some(amount) = i.amount %}<span class="muted">{{ amount }}</span>{% endif %}
+      <span class="muted small">{{ i.kind }}</span>
+      <form method="post" action="/products/{{ id }}/ingredients/{{ i.id }}/delete">
+        <button aria-label="Remove {{ i.name }}">×</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <form method="post" action="/products/{{ id }}/ingredients" class="inline-form">
+    <label>Ingredient <input type="text" name="name" list="ingredient-names" autocomplete="off" required></label>
+    <label>Kind
+      <select name="kind">
+        {% for (value, label) in kinds %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Amount <input type="text" name="amount" placeholder="optional, e.g. 200 mg"></label>
+    <button class="button">Add</button>
+  </form>
+  <datalist id="ingredient-names">
+    {% for name in ingredient_names %}<option value="{{ name }}">{% endfor %}
+  </datalist>
+</section>
+
+<section class="card pad">
+  <h2>Status</h2>
+  <div class="button-row">
+    {% if status == "active" %}
+    <form method="post" action="/products/{{ id }}/status"><input type="hidden" name="status" value="paused"><button class="button">Pause</button></form>
+    {% else %}
+    <form method="post" action="/products/{{ id }}/status"><input type="hidden" name="status" value="active"><button class="button primary">Resume</button></form>
+    {% endif %}
+    {% if status != "archived" %}
+    <form method="post" action="/products/{{ id }}/status"><input type="hidden" name="status" value="archived"><button class="button quiet">Archive</button></form>
+    {% endif %}
+  </div>
+  <p class="muted small">Paused products aren't due and don't count against your actual rate. Archive products you've stopped for good; they disappear once their bottles are gone.</p>
+</section>
+{% endblock %}

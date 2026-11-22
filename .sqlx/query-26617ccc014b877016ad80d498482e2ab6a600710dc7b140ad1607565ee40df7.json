@@ -1,0 +1,122 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, product_id, initial_count, expires_on, added_on, status, remaining, started_on, finished_on\n         FROM bottles ORDER BY expires_on, added_on, id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "bottles",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "product_id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "bottles",
+            "name": "product_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "initial_count",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "bottles",
+            "name": "initial_count"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "expires_on",
+        "type_info": "Date",
+        "origin": {
+          "Table": {
+            "table": "bottles",
+            "name": "expires_on"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "added_on",
+        "type_info": "Date",
+        "origin": {
+          "Table": {
+            "table": "bottles",
+            "name": "added_on"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "status",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "bottles",
+            "name": "status"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "remaining",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "bottles",
+            "name": "remaining"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "started_on",
+        "type_info": "Date",
+        "origin": {
+          "Table": {
+            "table": "bottles",
+            "name": "started_on"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "finished_on",
+        "type_info": "Date",
+        "origin": {
+          "Table": {
+            "table": "bottles",
+            "name": "finished_on"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true
+    ]
+  },
+  "hash": "26617ccc014b877016ad80d498482e2ab6a600710dc7b140ad1607565ee40df7"
+}

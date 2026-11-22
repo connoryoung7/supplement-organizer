@@ -1,0 +1,74 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT pi.product_id, pi.ingredient_id, i.name, i.kind, pi.amount\n         FROM product_ingredients pi JOIN ingredients i ON i.id = pi.ingredient_id\n         ORDER BY lower(i.name)",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "product_id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "product_ingredients",
+            "name": "product_id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "ingredient_id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "product_ingredients",
+            "name": "ingredient_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "name",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "ingredients",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "kind",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "ingredients",
+            "name": "kind"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "amount",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "product_ingredients",
+            "name": "amount"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "667516b1c8ac14a5a693b127262e71adeb896a786a3359c91c48f6a3be6d85eb"
+}

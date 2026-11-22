@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Edit bottle · Supplements{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">{{ product_title }}</p>
+    <h1>Edit bottle</h1>
+    <p class="muted">Added {{ added }}</p>
+  </div>
+</div>
+
+<form method="post" action="/bottles/{{ id }}" class="card pad stack">
+  <label>Count when added ({{ unit_plural }}) <input type="number" name="count" min="1" value="{{ count }}" inputmode="numeric" required></label>
+  <label>Expiry date <input type="text" name="expires" value="{{ expires }}" autocomplete="off" required></label>
+  <div class="button-row">
+    <button class="button primary">Save</button>
+    <a class="button quiet" href="/products/{{ product_id }}">Cancel</a>
+  </div>
+</form>
+
+<form method="post" action="/bottles/{{ id }}/delete" class="danger-zone" hx-confirm="Delete this bottle?">
+  <button class="button danger">Delete bottle</button>
+  <p class="muted small">For a bottle added by mistake or given away. A bottle you've emptied should be marked finished instead, so it counts toward your record.</p>
+</form>
+{% endblock %}

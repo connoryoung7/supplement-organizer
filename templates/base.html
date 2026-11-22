@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% block title %}Supplements{% endblock %}</title>
+  <link rel="manifest" href="/static/manifest.webmanifest">
+  <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+  <meta name="theme-color" content="#f5f4ef" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#101412" media="(prefers-color-scheme: dark)">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Supplements">
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/htmx.min.js" defer></script>
+</head>
+<body hx-boost="true">
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a href="/" class="brand">Supplements</a>
+      <nav class="tabs" aria-label="Main">
+        <a href="/"{% if layout.active == "today" %} aria-current="page"{% endif %}>Today</a>
+        <a href="/products"{% if layout.active == "products" %} aria-current="page"{% endif %}>Products</a>
+        <a href="/at-risk"{% if layout.active == "at-risk" %} aria-current="page"{% endif %}>At risk{% if layout.at_risk > 0 %}<span class="badge">{{ layout.at_risk }}</span>{% endif %}</a>
+        <a href="/ingredients"{% if layout.active == "ingredients" %} aria-current="page"{% endif %}>Ingredients</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    {% if let Some(error) = layout.error %}<div class="flash" role="alert">{{ error }}</div>{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

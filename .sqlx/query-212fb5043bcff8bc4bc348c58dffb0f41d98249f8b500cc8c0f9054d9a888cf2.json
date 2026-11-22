@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE doses SET taken_on = $2, units = $3 WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Date",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "212fb5043bcff8bc4bc348c58dffb0f41d98249f8b500cc8c0f9054d9a888cf2"
+}

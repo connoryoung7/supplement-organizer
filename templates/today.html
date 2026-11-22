@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Today · Supplements{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Today</h1>
+    <p class="muted">{{ date_label }}</p>
+  </div>
+</div>
+
+{% if !has_products %}
+<div class="card pad empty">
+  <p>Add the supplements you take, then the bottles you have of each. The app keeps them in the right order and warns you about bottles that will expire before you finish them.</p>
+  <a class="button primary" href="/products/new">Add your first product</a>
+</div>
+{% else %}
+<section>
+  <h2 class="section-title">Due</h2>
+  {% if due.is_empty() %}
+  <p class="card pad muted">Nothing left to take today.</p>
+  {% else %}
+  <ul class="list card">
+    {% for item in due %}
+    <li class="row">
+      <a class="row-main" href="/products/{{ item.id }}">
+        <span class="row-title">{{ item.title }}</span>
+        <span class="row-sub">{{ item.subtitle }}</span>
+        {% if let Some(note) = item.note %}<span class="row-note">{{ note }}</span>{% endif %}
+      </a>
+      {% if item.can_log %}
+      <form method="post" action="/products/{{ item.id }}/doses">
+        <input type="hidden" name="units" value="{{ item.dose_units }}">
+        <input type="hidden" name="back" value="/">
+        <button class="button primary take">Took {{ item.dose_label }}</button>
+      </form>
+      {% else %}
+      <a class="button" href="/products/{{ item.id }}">Add bottle</a>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+
+{% if !done.is_empty() %}
+<section>
+  <h2 class="section-title">Taken</h2>
+  <ul class="list card">
+    {% for item in done %}
+    <li class="row">
+      <a class="row-main" href="/products/{{ item.id }}">
+        <span class="row-title">{{ item.title }}</span>
+        <span class="row-sub"><span class="tick" aria-hidden="true">✓</span> {{ item.taken_label }}</span>
+      </a>
+      <form method="post" action="/doses/{{ item.undo_id }}/delete">
+        <input type="hidden" name="back" value="/">
+        <button class="button quiet">Undo</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if !upcoming.is_empty() %}
+<section>
+  <h2 class="section-title">Coming up</h2>
+  <ul class="list card">
+    {% for item in upcoming %}
+    <li>
+      <a class="row" href="/products/{{ item.id }}">
+        <span class="row-main"><span class="row-title">{{ item.title }}</span></span>
+        <span class="muted">{{ item.when }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+{% endif %}
+{% endblock %}

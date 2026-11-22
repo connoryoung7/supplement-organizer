@@ -1,0 +1,88 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT e.id, e.bottle_id, e.kind, e.on_date, e.count, e.created_at\n         FROM bottle_events e JOIN bottles b ON b.id = e.bottle_id WHERE b.product_id = $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "bottle_events",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "bottle_id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "bottle_events",
+            "name": "bottle_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "kind",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "bottle_events",
+            "name": "kind"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "on_date",
+        "type_info": "Date",
+        "origin": {
+          "Table": {
+            "table": "bottle_events",
+            "name": "on_date"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "count",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "bottle_events",
+            "name": "count"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "created_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "bottle_events",
+            "name": "created_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      false
+    ]
+  },
+  "hash": "41d34c59c2c28490b205268af12028eacc85a8123b13843bbe301fda4fbea129"
+}

@@ -1,0 +1,57 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT i.id AS \"id!\", i.name AS \"name!\", i.kind AS \"kind!\", count(pi.product_id) AS \"product_count!\"\n           FROM ingredients i LEFT JOIN product_ingredients pi ON pi.ingredient_id = i.id\n           GROUP BY i.id ORDER BY lower(i.name)",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "ingredients",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "name!",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "ingredients",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "kind!",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "ingredients",
+            "name": "kind"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "product_count!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      null
+    ]
+  },
+  "hash": "0bf88b6330f4712d945e9a06bc782466b8cb7a620a39c41de8ad7c0ea67b4d60"
+}

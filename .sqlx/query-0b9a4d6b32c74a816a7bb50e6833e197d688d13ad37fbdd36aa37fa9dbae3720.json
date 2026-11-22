@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE bottles SET initial_count = $2, expires_on = $3 WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Int4",
+        "Date"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "0b9a4d6b32c74a816a7bb50e6833e197d688d13ad37fbdd36aa37fa9dbae3720"
+}

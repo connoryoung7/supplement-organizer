@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO bottle_events (bottle_id, kind, on_date, count) VALUES ($1, $2, $3, $4)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Text",
+        "Date",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "0b709e6451d34e0adcbe0f61bb1d0a73c1542b2663aaa3ab18e769e6897b7109"
+}
